@@ -1,0 +1,13 @@
+<h1>Nueva Publicación</h1>
+<%= form_with model: @post, local: true do |f| %>
+  <div>
+    <%= f.label :title, "Título" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :content, "Contenido" %>
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+  <%= f.submit "Crear", class: "btn btn-primary" %>
+<% end %>
+

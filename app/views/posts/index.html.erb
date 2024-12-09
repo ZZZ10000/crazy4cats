@@ -1,0 +1,12 @@
+<h1>Publicaciones</h1>
+<%= link_to 'Nueva Publicación', new_post_path, class: 'btn btn-primary' if user_signed_in? %>
+<ul>
+  <% @posts.each do |post| %>
+    <li>
+      <h3><%= link_to post.title, post_path(post) %></h3>
+      <p><%= truncate(post.content, length: 100) %></p>
+      <p><em>Publicado por: <%= post.user.email %></em></p>
+    </li>
+  <% end %>
+</ul>
+

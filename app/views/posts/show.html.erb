@@ -1,0 +1,38 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+<p><em>Publicado por: <%= @post.user.email %></em></p>
+
+<% if user_signed_in? && @post.user == current_user %>
+  <%= link_to 'Editar', edit_post_path(@post), class: 'btn btn-warning' %>
+  <%= link_to 'Eliminar', post_path(@post), method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<hr>
+
+<h3>Reacciones</h3>
+<%= button_to 'Me gusta', react_post_path(@post, reaction_type: :like), method: :post, class: 'btn btn-primary' %>
+<%= button_to 'No me gusta', react_post_path(@post, reaction_type: :dislike), method: :post, class: 'btn btn-danger' %>
+
+<hr>
+
+<h3>Agregar un comentario</h3>
+<%= form_with model: [@post, Comment.new], local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :content, "Escribe tu comentario:", class: "form-label" %>
+    <%= f.text_area :content, rows: 3, class: "form-control" %>
+  </div>
+  <%= f.submit "Comentar", class: "btn btn-primary" %>
+<% end %>
+
+<hr>
+
+<h3>Comentarios</h3>
+<ul class="list-group">
+  <% @post.comments.each do |comment| %>
+    <li class="list-group-item">
+      <strong><%= comment.user&.email || "Anónimo" %>:</strong> <%= comment.content %>
+    </li>
+  <% end %>
+</ul>
+
+
